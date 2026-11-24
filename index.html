@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#2e7d32">
-<title>Diet — Indian diet chart &amp; calorie calculator</title>
-<meta name="description" content="Find your daily calories and get an Indian diet chart that fits — veg or non-veg.">
+<title>Diet — Indian diet chart, protein &amp; carbs</title>
+<meta name="description" content="An Indian diet chart that fits you, with protein and carbs for every meal — veg or non-veg.">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon-192.png">
 <style>
@@ -17,7 +17,7 @@ header{text-align:center;padding:14px 0 20px}
 header h1{font-size:34px;letter-spacing:-.5px}
 header h1 span{color:var(--green)}
 header p{color:var(--muted);font-size:14px;margin-top:4px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:16px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px;margin-bottom:16px;box-shadow:0 2px 14px rgba(28,36,28,.06)}
 .card h2{font-size:17px;margin-bottom:4px}
 .card .sub{color:var(--muted);font-size:13px;margin-bottom:14px}
 label{display:block;font-size:13px;font-weight:600;color:var(--muted);margin:12px 0 5px}
@@ -55,8 +55,7 @@ button.calc:active{background:var(--green-d)}
 .seg button.on{background:#fff;font-weight:700;box-shadow:0 1px 4px rgba(0,0,0,.12)}
 .planhead{display:flex;justify-content:space-between;align-items:baseline;margin:4px 0 12px}
 .planhead .tot{font-size:20px;font-weight:800}
-.planhead .tot small{font-size:12px;color:var(--muted);font-weight:400}
-.planmac{font-size:13px;color:var(--muted);margin:-8px 0 12px}
+.planmac{font-size:14px;font-weight:600;color:var(--green-d);background:var(--green-bg);border-radius:10px;padding:10px 12px;margin:-8px 0 12px}
 .meal{border-top:1px solid var(--line);padding:12px 0}
 .meal:first-of-type{border-top:none}
 .meal h3{font-size:15px;display:flex;justify-content:space-between}
@@ -78,12 +77,12 @@ footer{text-align:center;color:var(--muted);font-size:12px;margin-top:8px}
 <div class="wrap">
 <header>
 <h1>Diet<span>.</span></h1>
-<p>Your daily calories, and what to eat — Indian veg &amp; non-veg plans.</p>
+<p>Eat well — Indian veg &amp; non-veg plans, with protein and carbs.</p>
 </header>
 
 <div class="card">
-<h2>Your calories</h2>
-<p class="sub">Tell us about you, get your daily target.</p>
+<h2>Your diet</h2>
+<p class="sub">Tell us about you, get your daily protein and carbs.</p>
 <div class="row2">
 <div><label>Age (years)</label><input type="number" id="age" min="10" max="90" value="25"></div>
 <div><label>Gender</label><select id="gender"><option value="male">Male</option><option value="female">Female</option></select></div>
@@ -105,42 +104,39 @@ footer{text-align:center;color:var(--muted);font-size:12px;margin-top:8px}
 <button class="pill on" data-v="maintain">Stay the same</button>
 <button class="pill" data-v="gain">Gain weight</button>
 </div>
-<button class="calc" onclick="calculate()">Calculate my calories</button>
+<button class="calc" onclick="calculate()">Get my plan</button>
 
 <div id="results" class="hidden">
-<div class="big"><div class="num" id="targetCal">–</div><div class="lbl">calories a day for your goal</div></div>
 <div class="statgrid">
-<div class="stat"><div class="v" id="bmrVal">–</div><div class="k">BMR — calories at rest</div></div>
-<div class="stat"><div class="v" id="tdeeVal">–</div><div class="k">TDEE — with your activity</div></div>
 <div class="stat"><div class="v" id="idealVal">–</div><div class="k">Healthy weight range</div></div>
 <div class="stat"><div class="v" id="waterVal">–</div><div class="k">Water a day</div></div>
 </div>
 <div class="bmirow"><span class="v" id="bmiVal">–</span><span class="chip green" id="bmiChip">–</span><span style="color:var(--muted);font-size:13px">BMI</span></div>
 <div class="scale"><div class="mark" id="bmiMark" style="left:50%"></div></div>
-<div class="scale-lbs"><span>14</span><span>18.5</span><span>25</span><span>30</span><span>40</span></div>
+<div class="scale-lbls"><span>14</span><span>18.5</span><span>25</span><span>30</span><span>40</span></div>
 <div class="macros">
 <div class="m"><div class="v" id="pVal">–</div><div class="k">Protein / day</div></div>
 <div class="m"><div class="v" id="cVal">–</div><div class="k">Carbs / day</div></div>
 <div class="m"><div class="v" id="fVal">–</div><div class="k">Fat / day</div></div>
 </div>
-<p class="note">BMI and BMR use the standard formulas (Mifflin-St Jeor for BMR). Losing weight targets about 500 kcal below your TDEE; gaining adds about 300. Never go below 1,200 kcal a day without a doctor's advice.</p>
+<p class="note">Protein, carbs and fat are a general daily guide from standard values. BMI uses the standard formula. This is not medical advice.</p>
 </div>
 </div>
 
 <div class="card">
 <h2>Your diet chart</h2>
-<p class="sub">An Indian day of eating, matched to your calories. Tap a level to see another.</p>
+<p class="sub">An Indian day of eating. Tap a plan to see another.</p>
 <div class="pills" id="levels">
-<button class="pill" data-v="1500">1,500 kcal</button>
-<button class="pill" data-v="1800">1,800 kcal</button>
-<button class="pill" data-v="2000">2,000 kcal</button>
-<button class="pill" data-v="2200">2,200 kcal</button>
+<button class="pill" data-v="1500">Light</button>
+<button class="pill" data-v="1800">Balanced</button>
+<button class="pill" data-v="2000">Hearty</button>
+<button class="pill" data-v="2200">Heavy</button>
 </div>
 <div class="seg" id="dietSeg">
 <button class="on" data-v="veg">Vegetarian</button>
 <button data-v="nonveg">Non-veg</button>
 </div>
-<div class="planhead"><span style="font-weight:700" id="planTitle">1,800 kcal plan</span><span class="tot"><span id="planTotal">–</span> <small>kcal / day</small></span></div>
+<div class="planhead"><span style="font-weight:700" id="planTitle">Balanced plan</span></div>
 <div class="planmac" id="planMacros"></div>
 <div id="meals"></div>
 <p class="note">Portions are everyday home measures — 1 roti, 1 cup cooked rice or dal, 1 cup sabzi. Protein and carbs are approximate, from standard values. Drink water through the day; adjust salt and oil to your taste. This is a general guide, not medical advice.</p>
@@ -262,6 +258,7 @@ var FOODS = [
 ];
 var FOOD_CATS = [["all","All"],["breads","Roti & breads"],["dishes","Indian dishes"],["nonveg","Non-veg"],["dairy","Milk & dairy"],["dryfruits","Dry fruits"],["fruits","Fruits"],["snacks","Snacks & sweets"],["drinks","Drinks"]];
 
+var LEVEL_NAMES = {"1500":"Light","1800":"Balanced","2000":"Hearty","2200":"Heavy"};
 var state = { level: "1800", diet: "veg", activity: 1.375, goal: "maintain", foodCat: "all" };
 
 function pickPill(containerId, value){
@@ -296,16 +293,15 @@ function renderPlan(){
     html += '<div class="meal"><h3>'+meal+'<span></span></h3><ul>';
     plan[meal].forEach(function(item){
       sub += item[1]; mp += item[2]; mc += item[3];
-      html += '<li><span>'+item[0]+'</span><span>'+item[1]+' kcal · P '+item[2]+'g · C '+item[3]+'g</span></li>';
+      html += '<li><span>'+item[0]+'</span><span>P '+item[2]+'g · C '+item[3]+'g</span></li>';
     });
     total += sub; totP += mp; totC += mc;
-    html = html.replace('<h3>'+meal+'<span></span>', '<h3>'+meal+'<span>'+sub+' kcal · P '+mp+'g · C '+mc+'g</span>');
+    html = html.replace('<h3>'+meal+'<span></span>', '<h3>'+meal+'<span>P '+mp+'g · C '+mc+'g</span>');
     html += '</ul></div>';
   });
   document.getElementById("meals").innerHTML = html;
-  document.getElementById("planTotal").textContent = total.toLocaleString("en-IN");
   document.getElementById("planMacros").textContent = "Protein " + totP + "g · Carbs " + totC + "g a day";
-  document.getElementById("planTitle").textContent = Number(state.level).toLocaleString("en-IN") + " kcal plan · " + (state.diet === "veg" ? "Vegetarian" : "Non-veg");
+  document.getElementById("planTitle").textContent = LEVEL_NAMES[state.level] + " plan · " + (state.diet === "veg" ? "Vegetarian" : "Non-veg");
 }
 
 function renderFoodCats(){
@@ -344,9 +340,6 @@ function calculate(){
   else if(bmi < 30){ cat = "Overweight"; chip = "amber"; }
   else { cat = "Obese"; chip = "red"; }
   var lo = (18.5 * hm * hm).toFixed(1), hi = (24.9 * hm * hm).toFixed(1);
-  document.getElementById("targetCal").textContent = target.toLocaleString("en-IN");
-  document.getElementById("bmrVal").textContent = Math.round(bmr).toLocaleString("en-IN") + " kcal";
-  document.getElementById("tdeeVal").textContent = Math.round(tdee).toLocaleString("en-IN") + " kcal";
   document.getElementById("idealVal").textContent = lo + "–" + hi + " kg";
   document.getElementById("waterVal").textContent = (w * 35 / 1000).toFixed(1) + " L";
   document.getElementById("bmiVal").textContent = bmi.toFixed(1);
