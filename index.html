@@ -56,10 +56,11 @@ button.calc:active{background:var(--green-d)}
 .planhead{display:flex;justify-content:space-between;align-items:baseline;margin:4px 0 12px}
 .planhead .tot{font-size:20px;font-weight:800}
 .planhead .tot small{font-size:12px;color:var(--muted);font-weight:400}
+.planmac{font-size:13px;color:var(--muted);margin:-8px 0 12px}
 .meal{border-top:1px solid var(--line);padding:12px 0}
 .meal:first-of-type{border-top:none}
 .meal h3{font-size:15px;display:flex;justify-content:space-between}
-.meal h3 span{color:var(--green);font-size:14px}
+.meal h3 span{color:var(--green);font-size:13px;white-space:nowrap;margin-left:10px}
 .meal ul{list-style:none;margin-top:6px}
 .meal li{display:flex;justify-content:space-between;font-size:14px;padding:2px 0;color:#333}
 .meal li span:last-child{color:var(--muted);white-space:nowrap;margin-left:12px}
@@ -140,8 +141,9 @@ footer{text-align:center;color:var(--muted);font-size:12px;margin-top:8px}
 <button data-v="nonveg">Non-veg</button>
 </div>
 <div class="planhead"><span style="font-weight:700" id="planTitle">1,800 kcal plan</span><span class="tot"><span id="planTotal">–</span> <small>kcal / day</small></span></div>
+<div class="planmac" id="planMacros"></div>
 <div id="meals"></div>
-<p class="note">Portions are everyday home measures — 1 roti, 1 cup cooked rice or dal, 1 cup sabzi. Drink water through the day; adjust salt and oil to your taste. This is a general guide, not medical advice.</p>
+<p class="note">Portions are everyday home measures — 1 roti, 1 cup cooked rice or dal, 1 cup sabzi. Protein and carbs are approximate, from standard values. Drink water through the day; adjust salt and oil to your taste. This is a general guide, not medical advice.</p>
 </div>
 
 <div class="card hidden">
@@ -159,63 +161,63 @@ footer{text-align:center;color:var(--muted);font-size:12px;margin-top:8px}
 var PLANS = {
 "1500": {
  veg: {
-  "Breakfast": [["Poha (1 cup)",180],["Curd (½ cup)",50],["Tea",70]],
-  "Mid-morning": [["Apple (1)",95],["Almonds (10)",70]],
-  "Lunch": [["Roti (2)",160],["Dal (1 cup)",150],["Sabzi (1 cup)",100],["Salad",50],["Curd (½ cup)",50]],
-  "Evening": [["Buttermilk (1 glass)",40],["Peanuts (30 g)",170]],
-  "Dinner": [["Roti (2)",160],["Paneer (50 g)",130],["Salad",50]]
+  "Breakfast": [["Poha (1 cup)",180,3,35],["Curd (½ cup)",50,3,5],["Tea",70,1,10]],
+  "Mid-morning": [["Apple (1)",95,0,25],["Almonds (10)",70,2,2]],
+  "Lunch": [["Roti (2)",160,6,30],["Dal (1 cup)",150,9,22],["Sabzi (1 cup)",100,2,12],["Salad",50,1,5],["Curd (½ cup)",50,3,5]],
+  "Evening": [["Buttermilk (1 glass)",40,2,4],["Peanuts (30 g)",170,8,5]],
+  "Dinner": [["Roti (2)",160,6,30],["Paneer (50 g)",130,9,2],["Salad",50,1,5]]
  },
  nonveg: {
-  "Breakfast": [["Boiled eggs (2)",140],["Toast (1)",80],["Tea",70]],
-  "Mid-morning": [["Apple (1)",95],["Almonds (10)",70]],
-  "Lunch": [["Rice (1 cup)",200],["Dal (1 cup)",150],["Chicken curry (1 cup)",200],["Salad",50]],
-  "Evening": [["Buttermilk (1 glass)",40],["Peanuts (30 g)",170]],
-  "Dinner": [["Roti (1)",80],["Fish curry (1 cup)",180]]
+  "Breakfast": [["Boiled eggs (2)",140,12,1],["Toast (1)",80,2,15],["Tea",70,1,10]],
+  "Mid-morning": [["Apple (1)",95,0,25],["Almonds (10)",70,2,2]],
+  "Lunch": [["Rice (1 cup)",200,4,44],["Dal (1 cup)",150,9,22],["Chicken curry (1 cup)",200,25,6],["Salad",50,1,5]],
+  "Evening": [["Buttermilk (1 glass)",40,2,4],["Peanuts (30 g)",170,8,5]],
+  "Dinner": [["Roti (1)",80,3,15],["Fish curry (1 cup)",180,20,5]]
  }},
 "1800": {
  veg: {
-  "Breakfast": [["Upma (1 cup)",200],["Milk (1 cup)",150],["Banana (1)",105]],
-  "Mid-morning": [["Sprouts (1 cup)",150],["Tea",70]],
-  "Lunch": [["Roti (2)",160],["Rice (½ cup)",100],["Dal (1 cup)",150],["Sabzi (1 cup)",100],["Curd (½ cup)",50]],
-  "Evening": [["Peanuts (30 g)",170],["Buttermilk (1 glass)",40]],
-  "Dinner": [["Roti (2)",160],["Paneer (50 g)",130],["Salad",50],["Curd (½ cup)",50]]
+  "Breakfast": [["Upma (1 cup)",200,4,35],["Milk (1 cup)",150,8,12],["Banana (1)",105,1,27]],
+  "Mid-morning": [["Sprouts (1 cup)",150,7,20],["Tea",70,1,10]],
+  "Lunch": [["Roti (2)",160,6,30],["Rice (½ cup)",100,2,22],["Dal (1 cup)",150,9,22],["Sabzi (1 cup)",100,2,12],["Curd (½ cup)",50,3,5]],
+  "Evening": [["Peanuts (30 g)",170,8,5],["Buttermilk (1 glass)",40,2,4]],
+  "Dinner": [["Roti (2)",160,6,30],["Paneer (50 g)",130,9,2],["Salad",50,1,5],["Curd (½ cup)",50,3,5]]
  },
  nonveg: {
-  "Breakfast": [["Egg bhurji (2 eggs)",160],["Roti (1)",80],["Milk (1 cup)",150]],
-  "Mid-morning": [["Banana (1)",105],["Almonds (10)",70]],
-  "Lunch": [["Rice (1 cup)",200],["Dal (1 cup)",150],["Chicken curry (1 cup)",200],["Salad",50],["Curd (½ cup)",50]],
-  "Evening": [["Tea",70],["Peanuts (30 g)",170]],
-  "Dinner": [["Roti (2)",160],["Fish curry (1 cup)",180],["Salad",50]]
+  "Breakfast": [["Egg bhurji (2 eggs)",160,12,2],["Roti (1)",80,3,15],["Milk (1 cup)",150,8,12]],
+  "Mid-morning": [["Banana (1)",105,1,27],["Almonds (10)",70,2,2]],
+  "Lunch": [["Rice (1 cup)",200,4,44],["Dal (1 cup)",150,9,22],["Chicken curry (1 cup)",200,25,6],["Salad",50,1,5],["Curd (½ cup)",50,3,5]],
+  "Evening": [["Tea",70,1,10],["Peanuts (30 g)",170,8,5]],
+  "Dinner": [["Roti (2)",160,6,30],["Fish curry (1 cup)",180,20,5],["Salad",50,1,5]]
  }},
 "2000": {
  veg: {
-  "Breakfast": [["Aloo paratha (1)",200],["Curd (½ cup)",50],["Milk (1 cup)",150]],
-  "Mid-morning": [["Banana (1)",105],["Almonds (10)",70],["Tea",70]],
-  "Lunch": [["Roti (2)",160],["Rice (1 cup)",200],["Dal (1 cup)",150],["Sabzi (1 cup)",100],["Curd (½ cup)",50],["Salad",50]],
-  "Evening": [["Poha (1 cup)",180],["Buttermilk (1 glass)",40]],
-  "Dinner": [["Roti (2)",160],["Paneer (50 g)",130],["Sabzi (1 cup)",100],["Salad",50]]
+  "Breakfast": [["Aloo paratha (1)",200,4,35],["Curd (½ cup)",50,3,5],["Milk (1 cup)",150,8,12]],
+  "Mid-morning": [["Banana (1)",105,1,27],["Almonds (10)",70,2,2],["Tea",70,1,10]],
+  "Lunch": [["Roti (2)",160,6,30],["Rice (1 cup)",200,4,44],["Dal (1 cup)",150,9,22],["Sabzi (1 cup)",100,2,12],["Curd (½ cup)",50,3,5],["Salad",50,1,5]],
+  "Evening": [["Poha (1 cup)",180,3,35],["Buttermilk (1 glass)",40,2,4]],
+  "Dinner": [["Roti (2)",160,6,30],["Paneer (50 g)",130,9,2],["Sabzi (1 cup)",100,2,12],["Salad",50,1,5]]
  },
  nonveg: {
-  "Breakfast": [["Boiled eggs (2)",140],["Toast (2)",160],["Milk (1 cup)",150]],
-  "Mid-morning": [["Apple (1)",95],["Peanuts (30 g)",170]],
-  "Lunch": [["Rice (1 cup)",200],["Rajma (1 cup)",180],["Chicken curry (1 cup)",200],["Salad",50],["Curd (½ cup)",50]],
-  "Evening": [["Sprouts (1 cup)",150],["Tea",70]],
-  "Dinner": [["Roti (2)",160],["Fish curry (1 cup)",180],["Salad",50]]
+  "Breakfast": [["Boiled eggs (2)",140,12,1],["Toast (2)",160,4,30],["Milk (1 cup)",150,8,12]],
+  "Mid-morning": [["Apple (1)",95,0,25],["Peanuts (30 g)",170,8,5]],
+  "Lunch": [["Rice (1 cup)",200,4,44],["Rajma (1 cup)",180,9,30],["Chicken curry (1 cup)",200,25,6],["Salad",50,1,5],["Curd (½ cup)",50,3,5]],
+  "Evening": [["Sprouts (1 cup)",150,7,20],["Tea",70,1,10]],
+  "Dinner": [["Roti (2)",160,6,30],["Fish curry (1 cup)",180,20,5],["Salad",50,1,5]]
  }},
 "2200": {
  veg: {
-  "Breakfast": [["Upma (1 cup)",200],["Milk (1 cup)",150],["Banana (1)",105],["Almonds (10)",70]],
-  "Mid-morning": [["Sprouts (1 cup)",150],["Apple (1)",95]],
-  "Lunch": [["Roti (2)",160],["Rice (1 cup)",200],["Dal (1 cup)",150],["Sabzi (1 cup)",100],["Curd (1 cup)",100],["Salad",50]],
-  "Evening": [["Poha (1 cup)",180]],
-  "Dinner": [["Roti (2)",160],["Paneer (50 g)",130],["Sabzi (1 cup)",100],["Curd (½ cup)",50],["Salad",50]]
+  "Breakfast": [["Upma (1 cup)",200,4,35],["Milk (1 cup)",150,8,12],["Banana (1)",105,1,27],["Almonds (10)",70,2,2]],
+  "Mid-morning": [["Sprouts (1 cup)",150,7,20],["Apple (1)",95,0,25]],
+  "Lunch": [["Roti (2)",160,6,30],["Rice (1 cup)",200,4,44],["Dal (1 cup)",150,9,22],["Sabzi (1 cup)",100,2,12],["Curd (1 cup)",100,6,10],["Salad",50,1,5]],
+  "Evening": [["Poha (1 cup)",180,3,35]],
+  "Dinner": [["Roti (2)",160,6,30],["Paneer (50 g)",130,9,2],["Sabzi (1 cup)",100,2,12],["Curd (½ cup)",50,3,5],["Salad",50,1,5]]
  },
  nonveg: {
-  "Breakfast": [["Egg bhurji (2 eggs)",160],["Roti (2)",160],["Milk (1 cup)",150]],
-  "Mid-morning": [["Banana (1)",105],["Peanuts (30 g)",170]],
-  "Lunch": [["Rice (1 cup)",200],["Dal (1 cup)",150],["Chicken curry (1 cup)",200],["Curd (½ cup)",50],["Salad",50]],
-  "Evening": [["Sprouts (1 cup)",150],["Tea",70]],
-  "Dinner": [["Roti (2)",160],["Fish curry (1 cup)",180],["Sabzi (1 cup)",100],["Salad",50],["Curd (½ cup)",50]]
+  "Breakfast": [["Egg bhurji (2 eggs)",160,12,2],["Roti (2)",160,6,30],["Milk (1 cup)",150,8,12]],
+  "Mid-morning": [["Banana (1)",105,1,27],["Peanuts (30 g)",170,8,5]],
+  "Lunch": [["Rice (1 cup)",200,4,44],["Dal (1 cup)",150,9,22],["Chicken curry (1 cup)",200,25,6],["Curd (½ cup)",50,3,5],["Salad",50,1,5]],
+  "Evening": [["Sprouts (1 cup)",150,7,20],["Tea",70,1,10]],
+  "Dinner": [["Roti (2)",160,6,30],["Fish curry (1 cup)",180,20,5],["Sabzi (1 cup)",100,2,12],["Salad",50,1,5],["Curd (½ cup)",50,3,5]]
  }}
 };
 
@@ -288,20 +290,21 @@ document.getElementById("dietSeg").addEventListener("click", function(e){
 
 function renderPlan(){
   var plan = PLANS[state.level][state.diet];
-  var total = 0, html = "";
+  var total = 0, totP = 0, totC = 0, html = "";
   Object.keys(plan).forEach(function(meal){
-    var sub = 0;
+    var sub = 0, mp = 0, mc = 0;
     html += '<div class="meal"><h3>'+meal+'<span></span></h3><ul>';
     plan[meal].forEach(function(item){
-      sub += item[1];
-      html += '<li><span>'+item[0]+'</span><span>'+item[1]+' kcal</span></li>';
+      sub += item[1]; mp += item[2]; mc += item[3];
+      html += '<li><span>'+item[0]+'</span><span>'+item[1]+' kcal · P '+item[2]+'g · C '+item[3]+'g</span></li>';
     });
-    total += sub;
-    html = html.replace('<h3>'+meal+'<span></span>', '<h3>'+meal+'<span>'+sub+' kcal</span>');
+    total += sub; totP += mp; totC += mc;
+    html = html.replace('<h3>'+meal+'<span></span>', '<h3>'+meal+'<span>'+sub+' kcal · P '+mp+'g · C '+mc+'g</span>');
     html += '</ul></div>';
   });
   document.getElementById("meals").innerHTML = html;
   document.getElementById("planTotal").textContent = total.toLocaleString("en-IN");
+  document.getElementById("planMacros").textContent = "Protein " + totP + "g · Carbs " + totC + "g a day";
   document.getElementById("planTitle").textContent = Number(state.level).toLocaleString("en-IN") + " kcal plan · " + (state.diet === "veg" ? "Vegetarian" : "Non-veg");
 }
 
